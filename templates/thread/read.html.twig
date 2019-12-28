@@ -1,0 +1,88 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+	<div class="container">
+		<div class="breadcrumb title">
+			<h5 class="text-center">{{ thread.title }}</h5>
+		</div>
+		<a class="btn btn-primary btn-new" href="{{ path('post_create', {'threadId': thread.id}) }}">
+			Post Reply
+		</a>
+		{% if posts.haveToPaginate %}
+			<div class="pagerfanta float-right">
+				{{ pagerfanta(posts, 'app_pagination') }}
+			</div>
+		{% endif %}
+		<table class="table">
+			<tbody>
+				{% if posts.currentPage == 1 %}
+					<tr class="first">
+						<td>
+							<p>
+								{{ thread.user.username }}
+							</p>
+						</td>
+						<td>
+							<p>
+								<small>
+									{{ thread.createdAt|date('D M d, Y H:i a') }}
+								</small>
+								{% if is_granted('DELETE', thread) %}
+									<a class="float-right ver-space btn-side" href="{{ path('thread_delete', {'id': thread.id}) }}">
+										<i class="fa fa-trash"></i>
+									</a>
+								{% endif %}
+								{% if is_granted('EDIT', thread) %}
+									<a class="float-right ver-space btn-side" href="{{ path('thread_update', {'id': thread.id}) }}">
+										<i class="fa fa-edit"></i>
+									</a>
+								{% endif %}
+							</p>
+							<p>
+								{{ thread.body }}
+							</p>
+						</td>
+					</tr>
+				{% endif %}
+
+				{% for post in posts %}
+					<tr>
+						<td>
+							<p>
+								{{ post.user.username }}
+							</p>
+						</td>
+						<td>
+							<p>
+								<small>
+									{{ post.createdAt|date('D M d, Y H:i a') }}
+								</small>
+								{% if is_granted('DELETE', post) %}
+									<a class="float-right ver-space btn-side" href="{{ path('post_delete', {'id': post.id}) }}" onclick="return confirm('Delete post?')">
+										<i class="fa fa-trash"></i>
+									</a>
+								{% endif %}
+								{% if is_granted('EDIT', post) %}
+									<a class="float-right ver-space btn-side" href="{{ path('post_update', {'id': post.id}) }}">
+										<i class="fa fa-edit"></i>
+									</a>
+								{% endif %}
+							</p>
+							<p>
+								{{ post.body }}
+							</p>
+						</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+		<a class="btn btn-primary btn-new" href="{{ path('post_create', {'threadId': thread.id}) }}">
+			Post Reply
+		</a>
+		{% if posts.haveToPaginate %}
+			<div class="pagerfanta float-right">
+				{{ pagerfanta(posts, 'app_pagination') }}
+			</div>
+		{% endif %}
+	</div>
+{% endblock %}

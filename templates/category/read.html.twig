@@ -1,0 +1,83 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container">
+    	<div class="breadcrumb title">
+    		<h5 class="text-center">{{ category.title }}</h5>
+    	</div>
+		<a href="{{ path('thread_create', {'categoryId': category.id}) }}" class="btn btn-primary btn-new">
+			New Thread
+		</a>
+		{% if threads.haveToPaginate %}
+			<div class="pagerfanta float-right">
+				{{ pagerfanta(threads, 'app_pagination') }}
+			</div>
+		{% endif %}
+		<table class="table table-light table-hover">
+			<thead>
+			    <tr>
+			    	<th scope="col">Threads</th>
+			      	<th scope="col" class="col-text-align-center">Replies</th>
+			      	<th scope="col" class="col-text-align-center">Views</th>
+			      	<th scope="col">Last Post</th>
+			      	<th scope="col"></th>
+			    </tr>
+		  	</thead>
+		  	<tbody>
+		  		{% for thread in threads %}
+				    <tr>
+					    <td>
+					    	<a href="{{ path('thread_read', {'categorySlug': category.slug, 'slug': thread.slug}) }}">
+					    		{{ thread.title }}
+					    	</a>
+					    	<p>
+					    		<small>
+					    			by {{ thread.user.username }} >> {{ thread.createdAt|date('D M d, Y H:i a') }}
+					    		</small>
+					    	</p> 
+					    </td>
+					    <td class="col-text-align-center">{{ thread.posts|length }}</td>
+					    <td class="col-text-align-center">{{ thread.views }}</td>
+					    <td>
+							{% if thread.posts|last.user.username is defined %}
+								<small>
+									by {{ thread.posts|last.user.username }}
+									<p>
+										{{ thread.posts|last.createdAt|date('D M d, Y H:i a') }}
+									</p>
+								</small>
+							{% else %}
+								<small>
+									by {{ thread.user.username }}
+									<p>
+										{{ thread.createdAt|date('D M d, Y H:i a') }}
+									</p>
+								</small>
+							{% endif %}
+						</td>
+						<td>
+							{% if is_granted('DELETE', thread) %}
+								<a class="float-right ver-space btn-side" href="{{ path('thread_delete', {'id': thread.id}) }}" onclick="return confirm('Delete thread?')">
+									<i class="fa fa-trash"></i>
+								</a>
+							{% endif %}
+							{% if is_granted('EDIT', thread) %}
+								<a class="float-right ver-space btn-side" href="{{ path('thread_update', {'id': thread.id}) }}">
+									<i class="fa fa-edit"></i>
+								</a>
+							{% endif %}
+						</td>
+				    </tr>
+				{% endfor %}
+			</tbody>
+		</table>
+		<a href="{{ path('thread_create', {'categoryId': category.id}) }}" class="btn btn-primary btn-new">
+			New Thread
+		</a>
+		{% if threads.haveToPaginate %}
+			<div class="pagerfanta float-right">
+				{{ pagerfanta(threads, 'app_pagination') }}
+			</div>
+		{% endif %}
+	</div>
+{% endblock %}

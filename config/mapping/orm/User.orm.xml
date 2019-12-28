@@ -1,0 +1,36 @@
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+                          https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+
+ 	<entity name="App\Entity\User" table="user">
+
+ 		<id name="id" type="integer" column="id">
+        	<generator strategy="AUTO" />
+        	<options>
+            	<option name="unsigned">true</option>
+        	</options>
+    	</id>
+
+		<unique-constraints>
+			<unique-constraint columns="username,email"></unique-constraint>
+		</unique-constraints>
+
+		<field name="username" length="255" />
+		<field name="email" length="255" />
+		<field name="password" length="255" />
+		<field name="createdAt" type="datetime" />
+			<options>
+				<option name="default">CURRENT_TIMESTAMP</option>
+			</options>
+		<field name="updatedAt" type="datetime" nullable="true"/>
+		<field name="confirmationToken" nullable="true" />
+		<field name="roles" type="array" />
+		<field name="isActivated" type="boolean" />
+		<field name="isBanned" type="boolean" />
+		<one-to-many field="threads" target-entity="Thread" mapped-by="user" fetch="EXTRA_LAZY"/>
+		<one-to-many field="posts" target-entity="Post" mapped-by="user" fetch="EXTRA_LAZY"/>
+
+	</entity>
+
+</doctrine-mapping>

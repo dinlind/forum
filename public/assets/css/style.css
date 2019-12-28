@@ -1,0 +1,184 @@
+html {
+	height: 100%;
+	box-sizing: border-box;
+}
+
+body {
+	position: relative;
+	margin: 0;
+	padding-bottom: 6rem;
+	min-height: 100%;
+	font-family: 'Oxygen', sans-serif;
+}
+
+.container {
+	min-height: 100vh;
+	margin-top: 20px;
+}
+
+.centered-container-wrapper {
+	display: flex;
+	min-height: 100vh;
+	align-items: center;
+}
+
+.centered-container {
+	margin: auto;
+}
+
+.hor-space {
+	margin-bottom: 1rem;
+}
+
+.user {
+	width: 75%;
+}
+
+tr {
+	color: #fff;
+}
+
+.filters {
+	margin-top: 10px;
+}
+
+.title {
+	margin-bottom: 20px;
+}
+
+.btn-new {
+	margin-bottom: 20px;
+}
+
+.ver-space {
+	margin-right: 1rem;
+}
+
+.first {
+	background: #262626;
+}
+
+.btn-side {
+	font-size: 0.7rem;
+	color: #fff;
+}
+
+.hidden {
+	display: none;
+}
+
+th {
+	font-weight: normal;
+}
+
+.fa-user-circle {
+	font-size: 2rem;
+}
+
+.dropdown-toggle:hover {
+	text-decoration: none;
+	color: #000;
+}
+
+footer {
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+	height: 67.75px;
+	padding: 1rem;
+	background-color: white;
+}
+
+.copyright-text {
+	margin-top: 0.5rem;
+}
+
+.form-control, .btn, .alert, .breadcrumb, .page-link, .dropdown-menu {
+	border-radius: 0 !important;
+}
+
+.remember-me {
+	margin-left: 0.5rem;
+}
+
+.form-wrapper {
+	border: 1px solid #2A9FD6;
+}
+
+.form-login, .form-signup {
+	padding: 2rem;
+}
+
+input::placeholder {
+	font-size: 0.8rem;
+	text-transform: none;
+}
+
+.form-signup {
+	padding-top: 0;
+}
+
+.signup-header {
+	margin-bottom: 1rem;
+}
+
+.errors {
+	margin: 2rem 2rem 0 2rem;
+	font-size: 0.75rem;
+	text-align: justify;
+}
+
+footer, .fa-user-circle, .form-error-icon, .flash-message, .btn-new {
+	color: #000 !important;
+}
+
+.btn-signup {
+	margin-top: 1rem;
+}
+
+.nav-btn {
+	color: #fff !important;
+}
+
+.nav-btn-login {
+	background-color: #000;
+	border-color: #000;
+}
+
+.nav-btn-login:hover {
+	background-color: #222;
+}
+
+.nav-menu-link {
+	color: #fff !important;
+}
+
+.nav-menu-link:hover {
+	color: rgba(255,255,255,0.75) !important;
+}
+
+.col-text-align-center {
+	text-align: center;
+}
+
+@media screen and (min-width: 992px) {
+	.nav-btn-login {
+		margin-right: 0.5rem;
+		margin-left: 0.5rem;
+	}
+}
+
+@media screen and (max-width: 992px) {
+	.nav-menu-link {
+		text-align: center;
+	}
+
+	.nav-btn-login {
+		margin-top: 1.5rem;
+		margin-bottom: 0.5rem;
+	}
+
+	.user-icon {
+		text-align: right;
+	}
+}

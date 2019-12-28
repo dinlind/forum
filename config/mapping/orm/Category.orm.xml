@@ -1,0 +1,37 @@
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:gedmo="http://gediminasm.org/schemas/orm/doctrine-extensions-mapping">
+
+ 	<entity name="App\Entity\Category" table="category">
+
+ 		<id name="id" type="integer" column="id">
+        	<generator strategy="AUTO" />
+          	<options>
+            	<option name="unsigned">true</option>
+        	</options>
+    	</id>
+
+      	<unique-constraints>
+      		<unique-constraint columns="title"></unique-constraint>
+      	</unique-constraints>
+
+		<field name="title" type="string" length="255" />
+		<field name="slug" type="string" length="255">
+            <gedmo:slug unique="true" separator="-" fields="title" />
+        </field>
+		<field name="description" length="255" type="string" />
+		<field name="createdAt" type="datetime" />
+			<options>
+				<option name="default">CURRENT_TIMESTAMP</option>
+			</options>
+		<field name="updatedAt" type="datetime" nullable="true" />
+    	<one-to-many field="threads" target-entity="Thread" mapped-by="category" fetch="EXTRA_LAZY">
+		</one-to-many>
+		<field name="postCount" type="integer">
+			<options>
+				<option name="default">0</option>
+			</options>
+		</field>
+		
+    </entity>                      
+
+</doctrine-mapping>

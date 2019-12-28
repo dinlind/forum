@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container">
+		<table class="table table-light table-hover">
+			<thead>
+			    <tr>
+			    	<th scope="col">Categories</th>
+			      	<th scope="col" class="col-text-align-center">Threads</th>
+			      	<th scope="col" class="col-text-align-center">Posts</th>
+			      	<th scope="col">Last Post</th>
+			    </tr>
+		  	</thead>
+		  	<tbody>
+		  		{% for category in categories %}
+				    <tr>
+					    <td>
+					    	<a href="{{ path('category_read', {'slug': category.slug}) }}">
+					    		{{ category.title }}
+					    	</a>
+					    	<p>
+					    		<small>{{ category.description }}</small>
+					    	</p>
+					    </td>
+					    <td class="col-text-align-center">{{ category.threads|length}}</td>
+					    <td class="col-text-align-center">{{ category.postCount }}</td>
+					    <td>
+							{% if category.threads|first %}
+								{% if category.threads|first.lastPost %}
+									<small>
+										by {{ category.threads|first.lastPost.user.username }}
+										<p>
+											{{ category.threads|first.lastPost.createdAt|date('D M d, Y H:i a') }}
+										</p>
+									</small>
+								{% else %}
+									<small>
+										by {{ category.threads|first.user.username }}
+										<p>
+											{{ category.threads|first.createdAt|date('D M d, Y H:i a') }}
+										</p>
+									</small>
+								{% endif %}
+							{% endif %}
+						</td>
+				    </tr>
+				{% endfor %}
+			</tbody>
+		</table> 
+	</div>
+{% endblock %}

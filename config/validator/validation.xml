@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
+                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                    xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping
+        https://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
+
+    <class name="App\Entity\Thread">
+        <constraint name="Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity">
+            <option name="fields">title</option>
+            <option name="message">Thread with this title already exists.</option>
+        </constraint>
+        <property name="title">
+            <constraint name="NotBlank" />
+            <constraint name="Length">
+                <option name="min">2</option>
+            </constraint>
+        </property>
+        <property name="body">
+            <constraint name="NotBlank" />
+            <constraint name="Length">
+                <option name="min">2</option>
+            </constraint>
+        </property>
+    </class>
+
+    <class name="App\Entity\Post">
+        <property name="body">
+            <constraint name="NotBlank" />
+            <constraint name="Length">
+                <option name="min">2</option>
+            </constraint>
+        </property>
+    </class>
+
+    <class name="App\Entity\User">
+        <constraint name="Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity">
+            <option name="fields">username</option>
+            <option name="message">Username entered already in use.</option>
+        </constraint>
+        <constraint name="Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity">
+            <option name="fields">email</option>
+            <option name="message">Email entered already in use.</option>
+        </constraint>
+        <property name="username">
+            <constraint name="Length">
+                <option name="min">2</option>
+                <option name="max">16</option>
+                <option name="minMessage">
+                    Username must be at least 2 characters long.
+                </option>
+                <option name="maxMessage">
+                    Username must be no longer than 16 characters.
+                </option>
+            </constraint>
+        </property>
+        <property name="plainPassword">
+            <constraint name="Length">
+                <option name="min">8</option>
+                <option name="minMessage">
+                    Password must be at least 8 characters long.
+                </option>
+            </constraint>
+        </property>
+        <property name="captchaCode">
+            <constraint name="Captcha\Bundle\CaptchaBundle\Validator\Constraints\ValidCaptcha">
+                <option name="message">Incorrect CAPTCHA.</option>
+                <option name="groups">
+                    <value>registration</value>
+                </option>
+            </constraint>
+        </property>
+    </class>
+</constraint-mapping>

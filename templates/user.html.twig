@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Forum / Admin{% endblock %}
+
+{% block body %}
+	<div class="container">
+		<div class='row'>
+			<div class='col divider'>
+				<div class="text-center vertical-center my-container-wrapper">
+					<div class="my-container">
+						<table class="table table-bordered table-active">
+							<thead>
+								<tr>
+							      <th scope="col">#</th>
+							      <th scope="col">Username</th>
+							      <th scope="col">Email</th>
+							      <th scope="col">Created</th>
+							      <th scope="col">Active</th>
+							      <th scope="col">Banned</th>
+					    		</tr>
+					  		</thead>
+					  		<tbody>
+					  			{% for user in users %}
+								    <tr>
+							    		<th scope="row">{{ user.id }}</th>
+								      	<td>{{ user.username }}</td>
+								      	<td>{{ user.email }}</td>
+								      	<td>{{ user.createdAt|date('Y-m-d') }}</td>
+								      	<td>{{ user.isActivated }}</td>
+								      	<td>{{ user.isBanned }}</td>
+								    </tr>
+								{% endfor %}
+						  	</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+			<div class='col divider'>
+				<div class="text-center vertical-center centered-container-wrapper">
+					<div class="centered-container">
+						{{ form_start(form) }}
+							<div class="input-group">
+								{{ form_widget(form.q) }}
+								<button type="submit" class="btn btn-primary">
+									<i class="fa fa-search"></i>
+								</button>
+							</div>
+						{{ form_end(form, {'render_rest': false}) }}
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}

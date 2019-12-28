@@ -1,0 +1,17 @@
+{{ form_start(form) }}
+    {{ form_row(form.title) }}
+    {{ form_row(form.body, {'attr': {'rows': '10'}}) }}
+
+    <div class="text-center">
+        {{ form_widget(form.save, {'attr': {'class': 'btn-outline-primary'}}) }}
+
+        {% set hidden = app.request.get('_route') == 'thread_update' ? 'hidden' : '' %}
+
+        {{ form_widget(form.save_draft, {'attr': {'class': 'btn-outline-primary %s'|format(hidden) }}) }}
+
+        <a class="btn btn-outline-primary" href="{{ path('category_read', {'slug': category.slug}) }}">
+            Cancel
+        </a>
+    </div>
+
+{{ form_end(form)}}

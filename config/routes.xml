@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<routes xmlns="http://symfony.com/schema/routing"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/routing
+        https://symfony.com/schema/routing/routing-1.0.xsd">
+
+    <!-- index -->
+    <route id="index" path="/" controller="App\Controller\IndexController::index" methods="GET" />
+    <route id="about" path="/about" controller="App\Controller\IndexController::showAbout" methods="GET" />
+    <route id="terms_and_conditions" path="/terms-and-conditions" controller="App\Controller\IndexController::showTerms" methods="GET" />
+
+    <route id="admin" path="/admin" controller="App\Controller\AdminController::index" methods="GET|POST" />
+
+    <!-- security -->
+    <route id="signup" path="/signup" controller="App\Controller\SecurityController::signup" methods="GET|POST" />
+    <route id="login" path="/login" controller="App\Controller\SecurityController::login" methods="GET|POST" />
+    <route id="activate" path="/activate/{confirmationToken}" controller="App\Controller\SecurityController::activate" methods="GET" />
+    <route id="change_password" path="/change-password" controller="App\Controller\SecurityController::changePassword" methods="GET|POST" />
+    <route id="password_reset_request" path="/request-reset-password" controller="App\Controller\SecurityController::requestResetPassword" methods="GET|POST" />
+    <route id="password_reset" path="/reset-password/{confirmationToken}" controller="App\Controller\SecurityController::resetPassword" methods="GET|POST" />
+    <route id="logout" path="/logout" controller="App\Controller\SecurityController::logout" methods="GET|POST" />
+
+    <!-- category -->
+    <route id="category_read" path="/c/{slug}" controller="App\Controller\CategoryController::read" methods="GET" />
+
+    <!-- thread -->	
+    <route id="thread_create" path="/{categoryId}/thread/new" controller="App\Controller\ThreadController::create" methods="GET|POST" />
+    <route id="thread_read" path="/{categorySlug}/{slug}" controller="App\Controller\ThreadController::read" methods="GET" />
+    <route id="thread_update" path="/thread/{id}/edit" controller="App\Controller\ThreadController::update" methods="GET|POST" />
+    <route id="thread_delete" path="/thread/{id}/delete" controller="App\Controller\ThreadController::delete" methods="GET" />
+
+    <!-- post -->
+    <route id="post_create" path="/thread/{threadId}/reply" controller="App\Controller\PostController::create" methods="GET|POST" />
+    <route id="post_update" path="/post/{id}/edit" controller="App\Controller\PostController::update" methods="GET|POST" />
+    <route id="post_delete" path="/post/{id}/delete" controller="App\Controller\PostController::delete" methods="GET" />
+
+    <import resource="@CaptchaBundle/Resources/config/routing.yml" />
+</routes>

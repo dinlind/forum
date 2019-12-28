@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container">
+        <div class="breadcrumb title">
+            <h5 class="text-center">{{ thread.title }}</h5>
+        </div>
+        {% include 'post/form.html.twig' %}
+    </div>
+{% endblock %}
