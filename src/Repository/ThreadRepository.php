@@ -23,7 +23,7 @@ class ThreadRepository extends ServiceEntityRepository
 
     public function findPosts(int $id): ArrayCollection
     {
-        $query = $this->createQueryBuilder('t')
+        $query = $this->_em->createQueryBuilder()
             ->select('p')
             ->from('App:Post', 'p')
             ->where('p.thread = :id')
@@ -37,7 +37,7 @@ class ThreadRepository extends ServiceEntityRepository
 
     public function findCurrentCategory(int $id): ?Category
     {
-        return $this->createQueryBuilder('t')
+        return $this->_em->createQueryBuilder()
             ->select('c')
             ->from('App:Category', 'c')
             ->where('c.id = :id')

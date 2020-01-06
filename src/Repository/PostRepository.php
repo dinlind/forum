@@ -22,7 +22,7 @@ class PostRepository extends ServiceEntityRepository
 
     public function findCurrentThread(int $id): ?Thread
     {
-        return $this->createQueryBuilder('p')
+        return $this->_em->createQueryBuilder()
             ->select('t')
             ->from('App:Thread', 't')
             ->where('t.id = :id')

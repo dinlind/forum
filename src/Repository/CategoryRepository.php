@@ -22,7 +22,7 @@ class CategoryRepository extends ServiceEntityRepository
 
     public function findThreads(int $id): ArrayCollection
     {
-        $query = $this->createQueryBuilder('c')
+        $query = $this->_em->createQueryBuilder()
             ->select('t')
             ->from('App:Thread', 't')
             ->where('t.category = :id')
