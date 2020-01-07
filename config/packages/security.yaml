@@ -28,7 +28,7 @@ security:
     access_control:
         - { path: ^/admin, roles: ROLE_ADMIN }
         - { path: ^/[0-9]+/thread/new$, roles: ROLE_USER }
-        - { path: ^/[0-9]+/reply$, roles: ROLE_USER }
+        - { path: ^/thread/[0-9]+/reply$, roles: ROLE_USER }
         - { path: ^/login$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
 
         
