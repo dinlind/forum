@@ -34,5 +34,8 @@
     <route id="post_update" path="/post/{id}/edit" controller="App\Controller\PostController::update" methods="GET|POST" />
     <route id="post_delete" path="/post/{id}/delete" controller="App\Controller\PostController::delete" methods="GET" />
 
+    <!-- profile -->
+    <route id="profile_read" path="{id}/my-profile/overview" controller="App\Controller\ProfileController::read" methods="GET" />
+
     <import resource="@CaptchaBundle/Resources/config/routing.yml" />
 </routes>
