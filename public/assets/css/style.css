@@ -101,10 +101,6 @@ footer {
 	margin-left: 0.5rem;
 }
 
-.form-wrapper {
-	border: 1px solid #2A9FD6;
-}
-
 .form-login, .form-signup {
 	padding: 2rem;
 }
