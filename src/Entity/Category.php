@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Service\ThreadSorter;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 
@@ -46,7 +47,11 @@ class Category
 
     public function getThreads(): Collection
     {
-        return $this->threads;
+        $threads = $this->threads->filter(function($thread) {
+            return $thread->getIsDraft() === false;
+        });
+
+        return ThreadSorter::sortByLastPost($threads);
     }
 
     public function addThread(Thread $thread): self

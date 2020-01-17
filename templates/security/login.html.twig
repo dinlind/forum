@@ -3,38 +3,36 @@
 {% block body %}
     <div class="text-center vertical-center centered-container-wrapper">
         <div class="centered-container">
-            <div class="form-wrapper">
-                <form class="form-login" method="post">
-                    {% if error %}
-                        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-                    {% endif %}
+            <form class="form-login" method="post">
+                {% if error %}
+                    <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                {% endif %}
 
-                    {% if app.user %}
-                        <div class="checkbox mb-3">You are logged in as {{ app.user.username }}, <a href="{{ path('logout') }}">Logout</a></div>
-                    {% endif %}
+                {% if app.user %}
+                    <div class="checkbox mb-3">You are logged in as {{ app.user.username }}, <a href="{{ path('logout') }}">Logout</a></div>
+                {% endif %}
 
-                    <h1 class="h3 mb-3 font-weight-normal">Log In</h1>
-                    <label for="inputUsername" class="sr-only">Username</label>
-                    <input type="text" value="{{ last_username }}" name="username" id="inputUsername" class="form-control hor-space" placeholder="Username" required autofocus>
-                    <label for="inputPassword" class="sr-only">Password</label>
-                    <input type="password" name="password" id="inputPassword" class="form-control hor-space" placeholder="Password" required>
+                <h1 class="h3 mb-3 font-weight-normal">Log In</h1>
+                <label for="inputUsername" class="sr-only">Username</label>
+                <input type="text" value="{{ last_username }}" name="username" id="inputUsername" class="form-control hor-space" placeholder="Username" required autofocus>
+                <label for="inputPassword" class="sr-only">Password</label>
+                <input type="password" name="password" id="inputPassword" class="form-control hor-space" placeholder="Password" required>
 
-                    <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+                <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
-                    <div class="checkbox mb-3">
-                        <label>
-                            <input type="checkbox" name="_remember_me"><span class="remember-me">Remember me</span>
-                        </label>
-                    </div>
+                <div class="checkbox mb-3">
+                    <label>
+                        <input type="checkbox" name="_remember_me"><span class="remember-me">Remember me</span>
+                    </label>
+                </div>
 
-                    <button class="btn btn-md btn-primary hor-space" type="submit">
-                        Log in
-                    </button>
-                    <p>
-                        <a href="{{ path('password_reset_request') }}">Forgot your password?</a>
-                    </p>
-                </form>
-            </div>
+                <button class="btn btn-md btn-primary hor-space" type="submit">
+                    Log in
+                </button>
+                <p>
+                    <a href="{{ path('password_reset_request') }}">Forgot your password?</a>
+                </p>
+            </form>
         </div>
     </div>
 {% endblock %}
