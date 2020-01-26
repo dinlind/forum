@@ -178,3 +178,30 @@ footer, .fa-user-circle, .form-error-icon, .flash-message, .btn-new {
 		text-align: right;
 	}
 }
+
+.profile-container {
+	display: flex;
+	align-items: center;
+}
+
+.profile-settings {
+	width: 20%;
+	text-align: left;
+}
+
+.profile-settings > li {
+	background-color: #000;
+}
+
+.profile-settings > li > a {
+	color: #fff;
+}
+
+.profile-settings > li > a:hover {
+	text-decoration: none;
+}
+
+.active {
+	border: none;
+	background-color: #222 !important;
+}

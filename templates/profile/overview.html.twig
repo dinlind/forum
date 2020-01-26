@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% set currentRoute = app.request.get('_route') %}
+
+{% block title %}My Profile{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="breadcrumb title">
+            <h5>My Profile</h5>
+        </div>
+        <ul class="nav nav-tabs">
+            <li class="nav-item">
+                <a class="nav-link {{ currentRoute == 'profile_overview' ? 'active' : '' }}" href="{{ path('profile_overview') }}">Overview</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link {{ currentRoute == 'change_password' ? 'active' : '' }}" href="{{ path('change_password') }}">Settings</a>
+            </li>
+        </ul>
+            {% if currentRoute == 'profile_overview' %}
+                <div class="profile-container" style="margin-top: 1em;">
+                    <div class="centered-container">
+                        <p style="margin-bottom: 0.5em;">Joined: {{ app.user.createdAt|date('D M d, Y H:i a') }}</p>
+                        <p>Total posts: {{ app.user.threads|length + app.user.posts|length }}</p>
+                    </div>
+                </div>
+            {% elseif currentRoute == 'change_password' %}
+                <div class="text-center">
+                    {% block settings %}{% endblock %}
+                </div>
+            {% endif %}
+    </div>
+{% endblock %}

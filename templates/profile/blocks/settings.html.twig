@@ -1,0 +1,18 @@
+{% extends 'profile/overview.html.twig' %}
+
+{% set currentRoute = app.request.get('_route') %}
+
+{% block settings %}
+    <ul class="list-group profile-settings">
+        <li class="list-group-item active">
+            <a href="{{ path('change_password') }}">Change your password</a>
+        </li>
+    </ul>
+    <div class="profile-container">
+        <div class="centered-container">
+            {% if currentRoute == 'change_password' %}
+                {% block change_password %}{% endblock %}
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

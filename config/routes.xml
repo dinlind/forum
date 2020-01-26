@@ -9,16 +9,19 @@
     <route id="about" path="/about" controller="App\Controller\IndexController::showAbout" methods="GET" />
     <route id="terms_and_conditions" path="/terms-and-conditions" controller="App\Controller\IndexController::showTerms" methods="GET" />
 
-    <route id="admin" path="/admin" controller="App\Controller\AdminController::index" methods="GET|POST" />
-
     <!-- security -->
     <route id="signup" path="/signup" controller="App\Controller\SecurityController::signup" methods="GET|POST" />
     <route id="login" path="/login" controller="App\Controller\SecurityController::login" methods="GET|POST" />
     <route id="activate" path="/activate/{confirmationToken}" controller="App\Controller\SecurityController::activate" methods="GET" />
-    <route id="change_password" path="/change-password" controller="App\Controller\SecurityController::changePassword" methods="GET|POST" />
     <route id="password_reset_request" path="/request-reset-password" controller="App\Controller\SecurityController::requestResetPassword" methods="GET|POST" />
     <route id="password_reset" path="/reset-password/{confirmationToken}" controller="App\Controller\SecurityController::resetPassword" methods="GET|POST" />
     <route id="logout" path="/logout" controller="App\Controller\SecurityController::logout" methods="GET|POST" />
+
+    <route id="admin" path="/admin" controller="App\Controller\AdminController::index" methods="GET|POST" />
+
+    <!-- profile -->
+    <route id="profile_overview" path="/my-profile" controller="App\Controller\ProfileController::overview" methods="GET" />
+    <route id="change_password" path="my-profile/change-password" controller="App\Controller\ProfileController::changePassword" methods="GET|POST" />
 
     <!-- category -->
     <route id="category_read" path="/c/{slug}" controller="App\Controller\CategoryController::read" methods="GET" />
@@ -33,9 +36,6 @@
     <route id="post_create" path="/thread/{threadId}/reply" controller="App\Controller\PostController::create" methods="GET|POST" />
     <route id="post_update" path="/post/{id}/edit" controller="App\Controller\PostController::update" methods="GET|POST" />
     <route id="post_delete" path="/post/{id}/delete" controller="App\Controller\PostController::delete" methods="GET" />
-
-    <!-- profile -->
-    <route id="profile_read" path="{id}/my-profile/overview" controller="App\Controller\ProfileController::read" methods="GET" />
 
     <import resource="@CaptchaBundle/Resources/config/routing.yml" />
 </routes>

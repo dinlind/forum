@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Events;
-use App\Form\ChangePasswordType;
 use App\Form\ResetPasswordRequestType;
 use App\Form\ResetPasswordType;
 use App\Form\SignupType;
@@ -15,7 +14,6 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\GenericEvent;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class SecurityController extends AbstractController
@@ -86,28 +84,6 @@ class SecurityController extends AbstractController
         $this->addFlash('success', 'Your account has been successfully activated.');
 
         return $this->redirectToRoute('login');
-    }
-
-    public function changePassword(Request $request)
-    {
-        if (!$user = $this->getUser()) {
-            throw new NotFoundHttpException();
-        }
-
-        $form = $this->createForm(ChangePasswordType::class, $user);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $this->passwordUpdater->encodePassword($user);
-            $this->userManager->save($user);
-            $this->addFlash('success', 'Password is successfully changed.');
-
-            return $this->redirectToRoute('login');
-        }
-
-        return $this->render('security/password/change_password.html.twig', [
-            'form' => $form->createView(),
-        ]);
     }
 
     public function requestResetPassword(Request $request, EventDispatcherInterface $eventDispatcher)

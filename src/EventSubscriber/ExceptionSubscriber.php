@@ -35,7 +35,7 @@ class ExceptionSubscriber implements EventSubscriberInterface
 
         $currentRoute = $event->getRequest()->attributes->get('_route');
 
-        if (in_array($currentRoute, ['thread_create', 'post_create'])) {
+        if (in_array($currentRoute, ['thread_create', 'post_create', 'profile_overview', 'change_password'])) {
             return;
         }
 
