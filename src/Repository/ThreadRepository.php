@@ -6,6 +6,8 @@ use App\Entity\Category;
 use App\Entity\Thread;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Collections\ArrayCollection;
+use Pagerfanta\Adapter\DoctrineCollectionAdapter;
+use Pagerfanta\Pagerfanta;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
@@ -21,7 +23,7 @@ class ThreadRepository extends ServiceEntityRepository
         parent::__construct($registry, Thread::class);
     }
 
-    public function findPosts(int $id): ArrayCollection
+    public function findPosts(int $id, int $page)
     {
         $query = $this->_em->createQueryBuilder()
             ->select('p')
@@ -32,7 +34,9 @@ class ThreadRepository extends ServiceEntityRepository
             ->setParameter('id', $id)
             ->getQuery();
 
-        return new ArrayCollection($query->getResult());
+        $posts = new ArrayCollection($query->getResult());
+
+        return $this->createPaginator($posts, $page);
     }
 
     public function findCurrentCategory(int $id): ?Category
@@ -44,5 +48,36 @@ class ThreadRepository extends ServiceEntityRepository
             ->setParameter('id', $id)
             ->getQuery()
             ->getOneOrNullResult();
+    }
+
+    public function findDraft(int $categoryId, int $userId): ?Thread
+    {
+        return $this->findOneBy([
+            'category' => $categoryId,
+            'user' => $userId,
+            'isDraft' => true,
+        ]);
+    }
+
+    public function save(Thread $thread): void
+    {
+        $this->_em->persist($thread);
+        $this->_em->flush();
+    }
+
+    public function remove(Thread $thread): void
+    {
+        $this->_em->remove($thread);
+        $this->_em->flush();
+    }
+
+    private function createPaginator(ArrayCollection $posts, int $page): Pagerfanta
+    {
+        $paginator = new Pagerfanta(new DoctrineCollectionAdapter($posts));
+        $paginator
+            ->setCurrentPage($page)
+            ->getCurrentPage() === 1 ? $paginator->setMaxPerPage(9) : $paginator->setMaxPerPage(10);
+
+        return $paginator;
     }
 }

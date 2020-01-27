@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Thread;
 use App\Form\ThreadType;
-use App\Service\Manager\ThreadManager;
+use App\Repository\ThreadRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -12,19 +12,19 @@ use Symfony\Component\HttpFoundation\Response;
 
 class ThreadController extends AbstractController
 {
-	/** @var ThreadManager */
-	private $manager;
+	/** @var ThreadRepository */
+	private $repository;
 
-	public function __construct(ThreadManager $manager)
+	public function __construct(ThreadRepository $repository)
 	{
-		$this->manager = $manager;
+		$this->repository = $repository;
 	}
 
 	public function create(Request $request, int $categoryId)
 	{
-	    $category = $this->manager->findCurrentCategory($categoryId);
+	    $category = $this->repository->findCurrentCategory($categoryId);
 	    $user = $this->getUser();
-        $draft = $this->manager->findDraft($category->getId(), $user->getId()) ?: null;
+        $draft = $this->repository->findDraft($category->getId(), $user->getId()) ?: null;
         $thread = $draft ? $draft : new Thread($category, $user);
         $form = $this->createForm(ThreadType::class, $thread);
         $form->handleRequest($request);
@@ -36,7 +36,7 @@ class ThreadController extends AbstractController
             }
 
             $thread->setIsDraft(false);
-            $this->manager->save($thread);
+            $this->repository->save($thread);
             $this->addFlash('success', 'Thread is successfully created.');
 
             return $this->redirectToRoute('thread_read', [
@@ -52,7 +52,7 @@ class ThreadController extends AbstractController
                 $thread->setIsDraft(true);
             }
 
-            $this->manager->save($thread);
+            $this->repository->save($thread);
             $this->addFlash('success', 'Draft is successfully saved.');
 
             return $this->redirectToRoute('category_read', [
@@ -68,31 +68,31 @@ class ThreadController extends AbstractController
 
 	public function read(Request $request, string $slug): Response
 	{
-	    $thread = $this->manager->findOneBySlug($slug);
+	    $thread = $this->repository->findOneBy(['slug' => $slug]);
 	    $session = $request->getSession();
 
 	    if (!$session->get('view-'.$thread->getId())) {
 	        $session->set('view-'.$thread->getId(), true);
 	        $thread->setViews($thread->getViews() + 1);
-	        $this->manager->save($thread);
+	        $this->repository->save($thread);
         }
 
         return $this->render('thread/read.html.twig', [
 			'thread' => $thread,
-			'posts' => $this->manager->getPosts($thread->getId(), $request->query->getInt('page', 1)),
+			'posts' => $this->repository->findPosts($thread->getId(), $request->query->getInt('page', 1)),
 		]);
 	}
 
     public function update(Request $request, int $id)
     {
-        $thread = $this->manager->find($id);
+        $thread = $this->repository->find($id);
         $this->denyAccessUnlessGranted('EDIT', $thread);
         $form = $this->createForm(ThreadType::class, $thread);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $thread->setUpdatedAt(new \DateTime());
-            $this->manager->save($thread);
+            $this->repository->save($thread);
             $this->addFlash('success', 'Thread is successfully updated.');
 
             return $this->redirectToRoute('thread_read', [
@@ -110,9 +110,9 @@ class ThreadController extends AbstractController
 
     public function delete(int $id): RedirectResponse
     {
-        $thread = $this->manager->find($id);
+        $thread = $this->repository->find($id);
         $this->denyAccessUnlessGranted('DELETE', $thread);
-        $this->manager->remove($thread);
+        $this->repository->remove($thread);
         $this->addFlash('success', 'Thread is successfully deleted.');
 
         return $this->redirectToRoute('category_read', [
