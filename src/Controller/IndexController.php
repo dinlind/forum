@@ -2,24 +2,16 @@
 
 namespace App\Controller;
 
-use App\Service\Manager\CategoryManager;
+use App\Repository\CategoryRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 
 class IndexController extends AbstractController
 {
-    /** @var CategoryManager */
-    private $manager;
-
-    public function __construct(CategoryManager $manager)
-    {
-        $this->manager = $manager;
-    }
-
-    public function index(): Response
+    public function index(CategoryRepository $repository): Response
     {
         return $this->render('index/index.html.twig', [
-            'categories' => $this->manager->findAll(),
+            'categories' => $repository->findAll(),
         ]);
     }
 
