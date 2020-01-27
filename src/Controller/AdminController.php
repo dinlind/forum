@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Form\UserFilterType;
-use App\Service\Manager\UserManager;
+use App\Service\UserManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

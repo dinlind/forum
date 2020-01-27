@@ -7,7 +7,7 @@ use App\Events;
 use App\Form\ResetPasswordRequestType;
 use App\Form\ResetPasswordType;
 use App\Form\SignupType;
-use App\Service\Manager\UserManager;
+use App\Service\UserManager;
 use App\Service\PasswordUpdater;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;

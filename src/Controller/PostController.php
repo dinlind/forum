@@ -5,26 +5,26 @@ namespace App\Controller;
 use App\Entity\Post;
 use App\Entity\Thread;
 use App\Form\PostType;
-use App\Service\Manager\PostManager;
+use App\Repository\PostRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 class PostController extends AbstractController
 {
-    /** @var PostManager */
-    private $manager;
+    /** @var PostRepository */
+    private $repository;
 
-    public function __construct(PostManager $manager)
+    public function __construct(PostRepository $repository)
     {
-        $this->manager = $manager;
+        $this->repository = $repository;
     }
 
     public function create(Request $request, int $threadId)
     {
-        $thread = $this->manager->findCurrentThread($threadId);
+        $thread = $this->repository->findCurrentThread($threadId);
         $user = $this->getUser();
-        $draft = $this->manager->findDraft($thread->getId(), $user->getId()) ?: null;
+        $draft = $this->repository->findDraft($thread->getId(), $user->getId()) ?: null;
         $post = $draft ? $draft : new Post($thread, $user);
         $form = $this->createForm(PostType::class, $post);
         $form->handleRequest($request);
@@ -36,7 +36,7 @@ class PostController extends AbstractController
             }
 
             $post->setIsDraft(false);
-            $this->manager->save($post);
+            $this->repository->save($post);
             $this->addFlash('success', 'Post is successfully created.');
 
             return $this->redirectToThread($thread);
@@ -49,7 +49,7 @@ class PostController extends AbstractController
                 $post->setIsDraft(true);
             }
 
-            $this->manager->save($post);
+            $this->repository->save($post);
             $this->addFlash('success', 'Draft is successfully saved.');
 
             return $this->redirectToThread($thread);
@@ -63,14 +63,14 @@ class PostController extends AbstractController
 
     public function update(Request $request, int $id)
     {
-        $post = $this->manager->find($id);
+        $post = $this->repository->find($id);
         $this->denyAccessUnlessGranted('EDIT', $post);
         $form = $this->createForm(PostType::class, $post);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $post->setUpdatedAt(new \DateTime());
-            $this->manager->save($post);
+            $this->repository->save($post);
             $this->addFlash('success', 'Post is successfully updated.');
 
             return $this->redirectToThread($post->getThread());
@@ -85,9 +85,9 @@ class PostController extends AbstractController
 
     public function delete(int $id): RedirectResponse
     {
-        $post = $this->manager->find($id);
+        $post = $this->repository->find($id);
         $this->denyAccessUnlessGranted('DELETE', $post);
-        $this->manager->remove($post);
+        $this->repository->remove($post);
         $this->addFlash('success', 'Post is successfully deleted.');
 
         return $this->redirectToThread($post->getThread());

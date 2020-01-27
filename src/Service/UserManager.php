@@ -1,10 +1,9 @@
 <?php
 
-namespace App\Service\Manager;
+namespace App\Service;
 
 use App\Entity\User;
 use App\Repository\UserRepository;
-use App\Service\TokenGenerator;
 use Doctrine\Common\Persistence\ObjectManager;
 
 class UserManager
