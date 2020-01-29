@@ -1,4 +1,3 @@
-###> symfony/framework-bundle ###
 /.DS_Store
 /.env.local
 /.env.local.php
@@ -7,4 +6,6 @@
 /public/bundles/
 /var/
 /vendor/
-###< symfony/framework-bundle ###
+.phpunit
+.phpunit.result.cache
+/phpunit.xml
