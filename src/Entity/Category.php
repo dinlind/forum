@@ -4,7 +4,6 @@ namespace App\Entity;
 
 use App\Service\ThreadSorter;
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 
 class Category
 {
@@ -17,7 +16,7 @@ class Category
     /** @var string */
     private $description;
 
-    /** @var Collection|Thread[] */
+    /** @var ArrayCollection|Thread[] */
     private $threads;
 
     /** @var int */
@@ -45,7 +44,7 @@ class Category
         return $this;
     }
 
-    public function getThreads(): Collection
+    public function getThreads(): ArrayCollection
     {
         $threads = $this->threads->filter(function($thread) {
             return $thread->getIsDraft() === false;
